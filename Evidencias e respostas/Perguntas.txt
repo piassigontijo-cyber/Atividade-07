@@ -1,0 +1,44 @@
+1. Qual é o pino do LED e qual a velocidade serial desta aula? O LED de alimentação tem a mesma função?
+
+O LED integrado é conectado ao GPIO 2 e a comunicação serial utiliza velocidade de 115200 baud. O LED de alimentação não tem a mesma função, pois apenas indica que a placa está recebendo energia, enquanto o LED do GPIO 2 é controlado pelo programa.
+
+2. Qual comando inicia, qual para e qual define um ciclo de 500 ms? Qual comando consulta o estado?
+
+B: inicia o pisca do LED.
+
+P: para o pisca e apaga o LED.
+
+T:500: define o período completo do ciclo em 500 ms.
+
+S: consulta o estado atual da ESP32.
+
+3. Se o período for 800 ms, qual será a frequência e quanto tempo o LED ficará aceso em cada ciclo?
+
+A frequência será de 1,25 Hz, com o LED aceso durante 400 ms e apagado durante 400 ms.
+
+4. Por que o firmware usa millis em vez de uma longa sequência de delay para piscar?
+
+Porque a função millis() permite controlar o tempo sem interromper a execução do programa. Assim, a ESP32 consegue continuar recebendo comandos, respondendo pela comunicação serial e atualizando o estado do LED. Já o delay() interrompe a execução durante o tempo especificado.
+
+5. Por que o LED virtual não deve acender apenas porque foi enviado o comando B?
+
+Porque enviar um comando não significa que ele foi executado corretamente. O LED virtual só deve mudar de estado depois que a ESP32 enviar uma resposta confirmando a alteração. Isso evita mostrar informações incorretas no painel.
+
+6. Qual a diferença entre APAGADO e DESCONHECIDO? Por que enviar um resumo mesmo quando o LED está parado?
+
+APAGADO significa que a comunicação está funcionando e a ESP32 confirmou que o LED está desligado. DESCONHECIDO significa que não existem dados recentes suficientes para confirmar o estado do LED.
+
+O resumo deve ser enviado mesmo quando o LED está parado para manter a comunicação ativa e permitir que o navegador confirme que a ESP32 continua funcionando.
+
+7. O que o DEMO comprova e o que exige teste com a placa física?
+
+O DEMO comprova o funcionamento da interface virtual, o envio e recebimento simulado de comandos, a alteração dos períodos, o cálculo da frequência e a identificação de perda e recuperação de dados.
+
+Já o teste com a placa física é necessário para comprovar a comunicação USB real, a gravação do firmware, a execução dos comandos pela ESP32 e o funcionamento do LED integrado no GPIO 2.
+
+8. Se o painel receber ESTADO:1 e o LED físico não acender, que verificações devem ser feitas?
+
+Deve-se verificar se a placa está corretamente identificada, se o LED utilizado está realmente conectado ao GPIO 2, se a configuração PINO_LED = 2 e LED_ATIVO_EM_HIGH = true está correta e se o firmware foi gravado corretamente.
+
+Também é importante conferir a conexão USB, a alimentação da placa e se o modelo da ESP32 possui LED de usuário compatível com o acionamento utilizado.
+
